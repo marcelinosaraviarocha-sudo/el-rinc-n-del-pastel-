@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Rincón del Pastel | Presentación del emprendimiento</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap');
+:root{--cream:#fffaf4;--ink:#2b1b19;--brown:#704034;--rose:#ef9b9a;--gold:#f0bd68;--muted:#8a7770}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#1c1211;color:var(--ink);font-family:'DM Sans',sans-serif}
+.deck{height:100%;width:100%;position:relative;perspective:1400px}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;visibility:hidden;opacity:0;
+ overflow:hidden;background:var(--cream);padding:6.5vh 7vw 8vh;pointer-events:none;
+ transform:translate3d(90px,0,0) scale(.975);
+ transition:transform .78s cubic-bezier(.22,.78,.18,1),opacity .62s ease,visibility .78s}
+.slide.active{visibility:visible;opacity:1;pointer-events:auto;transform:translate3d(0,0,0);z-index:2}
+.slide.exit-left{visibility:visible;opacity:0;transform:translate3d(-90px,0,0) scale(.975);z-index:1}
+.slide.exit-right{visibility:visible;opacity:0;transform:translate3d(90px,0,0) scale(.975);z-index:1}
+.slide:before{content:"";position:absolute;width:520px;height:520px;border-radius:50%;
+ background:radial-gradient(circle,rgba(255,193,167,.32),rgba(255,218,177,.12) 48%,transparent 72%);
+ right:-190px;top:-230px;pointer-events:none;animation:glowPulse 7s ease-in-out infinite alternate}
+.slide:after{content:"";position:absolute;width:310px;height:310px;border-radius:50%;
+ background:radial-gradient(circle,rgba(239,155,154,.13),transparent 70%);
+ left:-160px;bottom:-190px;pointer-events:none}
+@keyframes glowPulse{from{transform:scale(.88);opacity:.65}to{transform:scale(1.13);opacity:1}}
+@keyframes appear{from{opacity:0;transform:translateY(18px) scale(.99)}to{opacity:1;transform:none}}
+@keyframes enterUp{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:translateY(0)}}
+@keyframes enterSide{from{opacity:0;transform:translateX(42px)}to{opacity:1;transform:translateX(0)}}
+@keyframes softFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+@keyframes glowPulse{from{transform:scale(.88);opacity:.65}to{transform:scale(1.13);opacity:1}}
+@keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes shine{0%{background-position:0%}100%{background-position:200%}}
+@keyframes rise{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
+.kicker{font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:var(--brown);font-weight:700;margin-bottom:14px}
+h1,h2,h3,p{margin-top:0}h1,h2{font-family:'Playfair Display',serif;letter-spacing:-.035em}h2{font-size:clamp(2.2rem,4.5vw,4.3rem);line-height:1.04;margin-bottom:22px}h3{font-size:1.12rem;margin-bottom:9px;color:var(--brown)}
+p{line-height:1.65;color:#695853;font-size:clamp(.92rem,1.2vw,1.12rem)}
+strong{color:var(--ink)}.accent{color:var(--brown)}.gold{color:#bd873e}
+.cover{padding:0;background:radial-gradient(circle at 18% 35%,#684039 0%,#321d1a 46%,#201211 100%);color:white;display:grid!important;grid-template-columns:1.02fr .98fr}
+.cover:before{display:none}.cover-copy{padding:10vh 0 8vh 8vw;display:flex;flex-direction:column;justify-content:center;z-index:2}
+.cover .kicker{color:#e9bd84}.cover h1{font-size:clamp(3.5rem,7vw,7.2rem);line-height:.95;margin:0 0 25px;color:#fff8ef}.cover p{color:#e8d7cf;max-width:490px}
+.cover-photo{position:relative;overflow:hidden}.cover-photo img{width:100%;height:100%;object-fit:cover;filter:saturate(1.12) brightness(1.08);opacity:.98;animation:softFloat 9s ease-in-out infinite}
+.cover-photo:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#321d1a 0%,rgba(50,29,26,.25) 22%,transparent 55%),linear-gradient(0deg,rgba(36,21,19,.22),transparent 55%)}
+.tagline{font-family:'Playfair Display',serif;font-style:italic;color:#ffd58e!important;font-size:1.35rem!important;margin-top:12px;text-shadow:0 0 22px rgba(255,196,116,.28)}
+.pill{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(216,168,93,.55);border-radius:50px;padding:10px 16px;color:#f3d6ad;font-size:.8rem;margin-top:26px;width:max-content}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:stretch}
+.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.card{background:linear-gradient(145deg,#fff 0%,#fffaf5 100%);border:1px solid #f4dfcf;border-radius:22px;padding:23px;box-shadow:0 14px 38px rgba(126,75,53,.09),inset 0 1px 0 #fff;animation:rise .7s both;transition:transform .35s ease,box-shadow .35s ease,border-color .35s ease}
+.card:nth-child(2){animation-delay:.10s}.card:nth-child(3){animation-delay:.20s}.card:nth-child(4){animation-delay:.30s}
+.card:hover{transform:translateY(-7px) scale(1.012);box-shadow:0 22px 48px rgba(126,75,53,.16);border-color:#edc58f}
+.active .kicker{animation:enterUp .65s .06s both}
+.active h1,.active h2{animation:enterUp .78s .12s both}
+.active p,.active .tagline,.active .pill,.active .quote{animation:enterUp .78s .22s both}
+.active .photo{animation:enterSide .9s .18s both}
+.active .stat{animation:rise .75s both}
+.active .step{animation:rise .7s both}
+.active .barline i{animation:barGrow 1.2s .35s cubic-bezier(.2,.8,.2,1) both;transform-origin:left}
+@keyframes barGrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.icon{font-size:1.8rem;margin-bottom:12px}.card p{font-size:.94rem;margin:0}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:4vw;align-items:center;flex:1;min-height:0}
+.photo{height:100%;min-height:300px;border-radius:28px;overflow:hidden;position:relative;box-shadow:0 22px 55px rgba(72,39,30,.16)}
+.photo img{width:100%;height:100%;object-fit:cover;transition:transform 1.1s cubic-bezier(.2,.8,.2,1),filter .6s;filter:saturate(1.08) brightness(1.03)}.photo:hover img{transform:scale(1.09);filter:saturate(1.2) brightness(1.08)}
+.photo-label{position:absolute;bottom:18px;left:18px;background:rgba(35,20,17,.82);color:#fff;padding:11px 15px;border-radius:12px;font-size:.82rem}
+.statrow{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}
+.stat{background:linear-gradient(145deg,#fff4e7,#f7e2d6);border:1px solid #f2d7c2;border-radius:18px;padding:18px;text-align:center;box-shadow:0 10px 26px rgba(126,75,53,.07)}.stat b{display:block;font:700 clamp(1.8rem,3vw,3rem) 'Playfair Display';color:var(--brown)}.stat span{font-size:.78rem;color:#806c65}
+.barline{height:10px;background:#f1e5dc;border-radius:20px;overflow:hidden;margin:8px 0 15px}.barline i{display:block;height:100%;background:linear-gradient(90deg,#e78c91,#f2c16d,#f6d995);background-size:200% 100%;border-radius:20px;box-shadow:0 0 14px rgba(231,140,145,.35);animation:shimmer 3.5s linear infinite}
+.foda{display:grid;grid-template-columns:1fr 1fr;gap:14px;flex:1}.foda .card{padding:19px}.foda ul{margin:0;padding-left:18px;color:#695853;line-height:1.55;font-size:.88rem}
+.foda .card:nth-child(1){border-top:5px solid #7eaa8a}.foda .card:nth-child(2){border-top:5px solid #d8a85d}.foda .card:nth-child(3){border-top:5px solid #8aa9c2}.foda .card:nth-child(4){border-top:5px solid #d98b83}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}.step{padding:20px;border-radius:18px;background:#f5e9df}.step b{font:700 2rem 'Playfair Display';color:#d18e76}
+.money{font:700 clamp(2.7rem,5vw,5rem) 'Playfair Display';color:var(--brown);line-height:1}
+.table{width:100%;border-collapse:collapse;background:white;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(86,47,37,.05);font-size:.9rem}.table th{background:#6e3d32;color:white;text-align:left;padding:13px}.table td{padding:12px 13px;border-bottom:1px solid #f0e5dc;color:#66534d}.table tr:last-child td{font-weight:700;background:#f8eee5}
+.quote{font:600 clamp(1.5rem,3vw,2.7rem)/1.25 'Playfair Display';color:var(--brown);max-width:850px}
+.end{background:#281815;color:white;justify-content:center;align-items:center;text-align:center}.end:before{background:rgba(216,168,93,.12);width:650px;height:650px;right:auto;top:auto;left:calc(50% - 325px);bottom:-450px}
+.end h2{color:#fff8ef;max-width:900px}.end p{color:#e4d1c8}
+.footer{position:absolute;bottom:24px;left:7vw;right:7vw;display:flex;justify-content:space-between;align-items:center;color:#9b8278;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase}
+.cover .footer{left:8vw;right:8vw;color:#d4bdb2}.progress{position:fixed;bottom:0;left:0;height:6px;background:linear-gradient(90deg,#ef9298,#f2c16d,#fff0b8);background-size:200% 100%;width:0;z-index:20;transition:width .75s cubic-bezier(.2,.8,.2,1);box-shadow:0 0 18px rgba(242,193,109,.65);animation:shimmer 4s linear infinite}
+.controls{position:fixed;right:25px;bottom:18px;display:flex;gap:8px;z-index:30}.controls button{border:1px solid rgba(240,189,104,.7);background:rgba(255,250,244,.96);color:#704034;border-radius:50%;width:46px;height:46px;font-size:1.05rem;cursor:pointer;box-shadow:0 7px 24px rgba(60,30,22,.18),0 0 18px rgba(255,218,164,.22);transition:transform .25s ease,background .25s ease,color .25s ease,box-shadow .25s ease}.controls button:hover{transform:translateY(-4px) scale(1.08);background:#704034;color:white;box-shadow:0 10px 28px rgba(60,30,22,.24),0 0 22px rgba(240,189,104,.35)}
+.counter{position:fixed;left:25px;bottom:26px;color:#b99f92;font-size:.78rem;z-index:30}
+@media(max-width:760px){.slide{padding:6vh 6vw 10vh;overflow:auto}.cover{grid-template-columns:1fr!important;grid-template-rows:1fr .7fr}.cover-copy{padding:8vh 7vw 3vh}.cover-photo{min-height:220px}.split{grid-template-columns:1fr;gap:18px}.photo{min-height:210px;max-height:260px}.grid.three,.steps{grid-template-columns:1fr}.grid{gap:10px}.card{padding:16px}.foda{gap:8px}.foda .card{padding:13px}.foda ul{font-size:.78rem}.statrow{gap:7px}.stat{padding:12px 6px}.footer{left:6vw;right:6vw;bottom:12px}.controls{right:12px;bottom:12px}.counter{left:12px;bottom:25px}.table{font-size:.75rem}.table td,.table th{padding:9px 7px}}
+@media(max-width:760px){
+ .slide{transform:translate3d(35px,0,0) scale(.99)}
+ .slide.exit-left{transform:translate3d(-35px,0,0) scale(.99)}
+ .slide.exit-right{transform:translate3d(35px,0,0) scale(.99)}
+ .controls button{width:42px;height:42px}
+}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<main class="deck" id="deck">
+<section class="slide cover active">
+ <div class="cover-copy">
+  <div class="kicker">Proyecto de emprendimiento productivo</div>
+  <h1>El Rincón<br><span style="color:#e5b978">del Pastel</span></h1>
+  <p>Elaboración y comercialización de pasteles, tortas y postres con calidad, creatividad y una atención cercana.</p>
+  <div class="tagline">“Un momento endulzando tu sonrisa”</div>
+  <div class="pill">✦ Presentación del proyecto · 2026</div>
+ </div>
+ <div class="cover-photo"><img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1400&q=85" alt="Pastel decorado"></div>
+ <div class="footer"><span>El Rincón del Pastel</span><span>01 / 12</span></div>
+</section>
+
+<section class="slide">
+ <div class="kicker">01 · La idea de negocio</div><h2>Una propuesta que<br><span class="accent">endulza momentos.</span></h2>
+ <div class="split">
+  <div><p>El Rincón del Pastel es una microempresa dedicada a la elaboración y comercialización de productos de repostería para cumpleaños, aniversarios, reuniones familiares y otras celebraciones.</p>
+   <div class="grid">
+    <div class="card"><div class="icon">🎂</div><h3>Producto principal</h3><p>Pasteles y tortas con variedad de sabores y diseños.</p></div>
+    <div class="card"><div class="icon">🧁</div><h3>Complementos</h3><p>Brownies y diferentes variedades de postres.</p></div>
+   </div>
+  </div>
+  <div class="photo"><img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=1000&q=85" alt="Torta artesanal"><div class="photo-label">Hecho con dedicación y creatividad</div></div>
+ </div>
+ <div class="footer"><span>El Rincón del Pastel</span><span>02 / 12</span></div>
+</section>
+
+<section class="slide">
+ <div class="kicker">02 · Identidad empresarial</div><h2>Lo que nos guía</h2>
+ <div class="grid">
+  <div class="card"><div class="icon">🎯</div><h3>Misión</h3><p>Elaborar y comercializar pasteles, tortas y postres con ingredientes de calidad, diseños creativos y precios accesibles, brindando atención responsable y personalizada.</p></div>
+  <div class="card"><div class="icon">🌟</div><h3>Visión</h3><p>Ser un emprendimiento reconocido por la calidad, creatividad y variedad, creciendo mediante la innovación y la buena atención al cliente.</p></div>
+  <div class="card"><div class="icon">🤝</div><h3>Valores</h3><p>Responsabilidad, calidad, higiene, creatividad, honestidad y respeto.</p></div>
+  <div class="card"><div class="icon">💛</div><h3>Propuesta de valor</h3><p>Productos frescos, presentaciones atractivas y diseños personalizados para cada ocasión.</p></div>
+ </div>
+ <div class="footer"><span>El Rincón del Pastel</span><span>03 / 12</span></div>
+</section>
+
+<section class="slide">
+ <div class="kicker">03 · Nuestros productos</div><h2>Variedad para cada<br><span class="accent">ocasión especial.</span></h2>
+ <div class="grid three">
+  <div class="card"><img style="width:100%;height:170px;object-fit:cover;border-radius:14px;margin-bottom:15px" src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=700&q=80" alt="Torta decorada"><h3>Tortas personalizadas</h3><p>Para cumpleaños, aniversarios y festejos.</p></div>
+  <div class="card"><img style="width:100%;height:170px;object-fit:cover;border-radius:14px;margin-bottom:15px" src="https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=700&q=80" alt="Postres variados"><h3>Postres</h3><p>Opciones dulces para distintos gustos.</p></div>
+  <div class="card"><img style="width:100%;height:170px;object-fit:cover;border-radius:14px;margin-bottom:15px" src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=700&q=80" alt="Brownies de chocolate"><h3>Brownies</h3><p>Una alternativa para acompañar y compartir.</p></div>
+ </div>
+ <div class="footer"><span>El Rincón del Pastel</span><span>04 / 12</span></div>
+</section>
+
+<section class="slide">
+ <div class="kicker">04 · Mercado consumidor</div><h2>¿A quién queremos llegar?</h2>
+ <div class="split">
+  <div><p>Nuestro público está formado por jóvenes, adultos y familias que buscan productos de repostería para consumo personal y celebraciones.</p>
+   <div class="card"><h3>Clientes principales</h3><p>Personas y familias que compran tortas y pasteles para cumpleaños, aniversarios y reuniones.</p></div>
+   <div class="card" style="margin-top:13px"><h3>Clientes secundarios</h3><p>Organizadores de eventos, empresas, cafeterías y restaurantes interesados en postres y brownies.</p></div>
+  </div>
+  <div class="photo"><img src="https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=1000&q=85" alt="Familia compartiendo celebración"><div class="photo-label">Momentos para compartir</div></div>
+ </div>
+ <div class="footer"><span>El Rincón del Pastel</span><span>05 / 12</span></div>
+</section>
+
+<section class="slide">
+ <div class="kicker">05 · Resultados del estudio</div><h2>Lo que prefieren<br><span class="accent">los consumidores.</span></h2>
+ <p>Resultados de la tabulación de encuestas incluida en el proyecto.</p>
+ <div class="grid">
+  <div class="card"><h3>Ocasión de compra</h3><div class="statrow"><div class="stat"><b>68%</b><span>Ocasiones especiales</span></div><div class="stat"><b>32%</b><span>Consumo periódico</span></div></div></div>
+  <div class="card"><h3>Preferencia de sabores</h3><p>Chocolate y tres leches <strong>55%</strong></p><div class="barline"><i style="width:55%"></i></div><p>Frutales y personalizados <strong>45%</strong></p><div class="barline"><i style="width:45%"></i></div></div>
+  <div class="card"><h3>Factores de decisión</h3><p>Sabor fresco/artesanal <strong>40%</strong></p><div class="barline"><i style="width:40%"></i></div><p>Creatividad del diseño <strong>35%</strong></p><div class="barline"><i style="width:35%"></i></div><p>Relación calidad-precio <strong>25%</strong></p><div class="barline"><i style="width:25%"></i></div></div>
+  <div class="card"><h3>Canales de atención</h3><div class="money">+70%</div><p>Prefiere consultas y pedidos por WhatsApp o redes sociales, con entrega o recojo programado.</p></div>
+ </div>
+ <div class="footer"><span>El Rincón del Pastel</span><span>06 / 12</span></div>
+</section>
+
+<section class="slide">
+ <div class="kicker">06 · Análisis estratégico</div><h2>Conocer el entorno:<br><span class="accent">análisis FODA.</span></h2>
+ <div class="foda">
+  <div class="card"><h3>＋ Fortalezas</h3><ul><li>Elaboración artesanal y dedicada.</li><li>Ingredientes frescos y de calidad.</li><li>Sabores, tamaños y diseños personalizables.</li></ul></div>
+  <div class="card"><h3>↗ Oportunidades</h3><ul><li>Interés por productos artesanales.</li><li>Promoción mediante redes sociales.</li><li>Alianzas con cafeterías y eventos.</li></ul></div>
+  <div class="card"><h3>－ Debilidades</h3><ul><li>Capacidad de producción limitada.</li><li>Dependencia del trabajo manual.</li><li>Marca nueva y recursos limitados.</li></ul></div>
+  <div class="card"><h3>⚑ Amenazas</h3><ul><li>Competencia de pastelerías.</li><li>Aumento del precio de ingredientes.</li><li>Preferencia por productos más económicos.</li></ul></div>
+ </div>
+ <div class="footer"><span>El Rincón del Pastel</span><span>07 / 12</span></div>
+</section>
+
+<section class="slide">
+ <div class="kicker">07 · Entorno externo</div><h2>Visión integral:<br><span class="accent">análisis PESTEL.</span></h2>
+ <div class="grid three">
+  <div class="card"><h3>Político</h3><p>Programas de apoyo a pequeños emprendimientos y participación en ferias.</p></div>
+  <div class="card"><h3>Económico</h3><p>Variación de precios de materias primas y capacidad de compra del consumidor.</p></div>
+  <div class="card"><h3>Social</h3><p>Demanda para celebraciones y preferencia por productos frescos y personalizados.</p></div>
+  <div class="card"><h3>Tecnológico</h3><p>Redes sociales, WhatsApp y herramientas digitales para pedidos y control.</p></div>
+  <div class="card"><h3>Ecológico</h3><p>Reducir desperdicios y usar responsablemente agua, energía y empaques.</p></div>
+  <div class="card"><h3>Legal</h3><p>Registros, autorizaciones y normas de higiene y manipulación de alimentos.</p></div>
+ </div>
+ <div class="footer"><span>El Rincón del Pastel</span><span>08 / 12</span></div>
+</section>
+
+<section class="slide">
+ <div class="kicker">08 · Producción y comercialización</div><h2>De la idea al cliente</h2>
+ <div class="split">
+  <div><p>El emprendimiento priorizará la calidad de los ingredientes, la higiene en la preparación y el cuidado de cada presentación.</p>
+   <div class="steps">
+    <div class="step"><b>01</b><h3>Preparar</h3><p>Seleccionar ingredientes y elaborar con higiene.</p></div>
+    <div class="step"><b>02</b><h3>Personalizar</h3><p>Adaptar sabores, tamaños y diseños.</p></div>
+    <div class="step"><b>03</b><h3>Entregar</h3><p>Coordinar pedidos y cumplir fechas acordadas.</p></div>
+   </div>
+   <p style="margin-top:20px"><strong>Promoción:</strong> Facebook, TikTok, Instagram y WhatsApp.</p>
+  </div>
+  <div class="photo"><img src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1000&q=85" alt="Preparación de repostería"><div class="photo-label">Calidad · Higiene · Creatividad</div></div>
+ </div>
+ <div class="footer"><span>El Rincón del Pastel</span><span>09 / 12</span></div>
+</section>
+
+<section class="slide">
+ <div class="kicker">09 · Organización financiera</div><h2>Capital para comenzar</h2>
+ <div class="split">
+  <div><p>El capital social inicial propuesto para poner en marcha el emprendimiento es de:</p><div class="money">Bs 100.000</div><p>Aportes de cinco socios destinados a maquinaria, equipos, mobiliario, materia prima y otros recursos necesarios.</p>
+   <div class="statrow"><div class="stat"><b>5</b><span>Socios</span></div><div class="stat"><b>100%</b><span>Capital aportado</span></div><div class="stat"><b>Bs 0</b><span>Pasivo inicial</span></div></div>
+  </div>
+  <div><table class="table"><thead><tr><th>Socio</th><th>Aporte</th><th>%</th></tr></thead><tbody>
+   <tr><td>Marcelino Saravia</td><td>30.000</td><td>30%</td></tr><tr><td>Noemi Soruco Osinaga</td><td>25.000</td><td>25%</td></tr><tr><td>Brayan Rivera</td><td>20.000</td><td>20%</td></tr><tr><td>Freddy Abel Chinaudt</td><td>15.000</td><td>15%</td></tr><tr><td>Gabriel Quispe Espinoza</td><td>10.000</td><td>10%</td></tr><tr><td>Total</td><td>100.000</td><td>100%</td></tr>
+  </tbody></table></div>
+ </div>
+ <div class="footer"><span>El Rincón del Pastel</span><span>10 / 12</span></div>
+</section>
+
+<section class="slide">
+ <div class="kicker">10 · Balance de apertura</div><h2>Recursos iniciales<br><span class="accent">del emprendimiento.</span></h2>
+ <div class="split">
+  <div><table class="table"><thead><tr><th>Activo</th><th>Importe (Bs)</th></tr></thead><tbody>
+   <tr><td>Caja</td><td>15.000</td></tr><tr><td>Banco</td><td>25.000</td></tr><tr><td>Inventario de materia prima</td><td>10.000</td></tr><tr><td>Horno industrial</td><td>20.000</td></tr><tr><td>Batidora industrial</td><td>8.000</td></tr><tr><td>Refrigerador</td><td>10.000</td></tr><tr><td>Muebles y vitrinas</td><td>7.000</td></tr><tr><td>Utensilios</td><td>5.000</td></tr><tr><td>Total activo</td><td>100.000</td></tr>
+  </tbody></table></div>
+  <div><div class="card"><h3>Comprobación contable</h3><div class="quote">Activo = Pasivo + Patrimonio</div><p style="margin-top:20px">Bs 100.000 = Bs 0 + Bs 100.000</p><div class="barline"><i style="width:100%"></i></div><p>El balance inicial se encuentra equilibrado: el activo total está respaldado por el capital social aportado.</p></div><div class="photo" style="height:180px;min-height:180px;margin-top:15px"><img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=900&q=80" alt="Equipos de cocina y repostería"></div></div>
+ </div>
+ <div class="footer"><span>El Rincón del Pastel</span><span>11 / 12</span></div>
+</section>
+
+<section class="slide end">
+ <div class="kicker" style="color:#e9bd84">Conclusión</div>
+ <h2>Convertimos ingredientes<br>en momentos especiales.</h2>
+ <p class="quote" style="color:#f0c68e">“Un momento endulzando tu sonrisa”.</p>
+ <p style="max-width:700px;margin:15px auto 0">El Rincón del Pastel busca crecer con planificación, calidad, creatividad y una atención que genere confianza y fidelidad en sus clientes.</p>
+ <div class="pill">Muchas gracias por su atención ✦</div>
+ <div class="footer"><span>El Rincón del Pastel</span><span>12 / 12</span></div>
+</section>
+</main>
+<div class="progress" id="progress"></div><div class="counter" id="counter">01 / 12</div>
+<div class="controls"><button id="prev" aria-label="Anterior">←</button><button id="next" aria-label="Siguiente">→</button><button id="full" aria-label="Pantalla completa">⛶</button></div>
+<script>
+const slides=[...document.querySelectorAll('.slide')];let current=0;
+function show(n){
+ const next=Math.max(0,Math.min(slides.length-1,n));
+ if(next===current && slides[current].classList.contains('active')) return;
+ const direction=next>current?'forward':'back';
+ const previous=slides[current];
+ const target=slides[next];
+ previous.classList.remove('active','exit-left','exit-right');
+ previous.classList.add(direction==='forward'?'exit-left':'exit-right');
+ target.classList.remove('exit-left','exit-right');
+ target.style.transition='none';
+ target.style.transform=direction==='forward'?'translate3d(90px,0,0) scale(.975)':'translate3d(-90px,0,0) scale(.975)';
+ target.style.opacity='0';
+ target.style.visibility='visible';
+ target.style.zIndex='3';
+ void target.offsetWidth;
+ target.style.transition='';
+ target.style.transform='';
+ target.style.opacity='';
+ target.classList.add('active');
+ current=next;
+ document.getElementById('progress').style.width=((current+1)/slides.length*100)+'%';
+ document.getElementById('counter').textContent=String(current+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
+ setTimeout(()=>{previous.classList.remove('exit-left','exit-right');previous.style.zIndex='';target.style.zIndex='';},850);
+}
+document.getElementById('next').onclick=()=>show(current+1);document.getElementById('prev').onclick=()=>show(current-1);
+document.getElementById('full').onclick=()=>{if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();else document.exitFullscreen?.()};
+document.addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();show(current+1)}if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();show(current-1)}if(e.key==='Home')show(0);if(e.key==='End')show(slides.length-1)});
+let x0=null;document.addEventListener('touchstart',e=>x0=e.touches[0].clientX,{passive:true});document.addEventListener('touchend',e=>{if(x0===null)return;let dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>55)show(current+(dx<0?1:-1));x0=null},{passive:true});
+show(0);
+</script>
+</body>
+</html>
